@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+
+#inspired by https://gist.github.com/blazeeboy/9584057
 require 'gosu' # gem install gosu
  
 $width, $height = 200, 200
