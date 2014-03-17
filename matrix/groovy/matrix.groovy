@@ -17,7 +17,7 @@ def gb = new GraphicsBuilder()
 def width = 200
 def height = 200
 def horiz_lines = 10
-def vert_lines = 10
+vert_lines = 10
 def avail_chars = ('a'..'z')
 def random = new Random()
 def entities = []
@@ -30,33 +30,14 @@ def gp = new GraphicsPanel(){
       g2.fillRect(0, 0, getWidth(), getHeight());
       g2.setColor(Color.GREEN)
       g2.setFont(new Font("default", Font.BOLD, 16));
-      entities.each{
-        g2.drawString(avail_chars[it.character],it.x.intValue(),it.y.intValue());
-    }
+      entities.each{g2.drawString(avail_chars[it.character],it.x.intValue(),it.y.intValue());}
     }
 
-    public void refresh(){
-        super.repaint()
-    }
+    public void refresh(){super.repaint()}
 }
 
 class Entity{
-    def x
-    def y
-    def vel
-    def character
-    def height
-    def update_limit
-    def last_update
-    def Entity(x, y, vel, random, height){
-        this.x = x
-        this.y = y
-        this.vel = vel
-        this.height = height
-        this.character = random.nextInt(26)
-        update_limit = random.nextInt(50)+10
-        last_update = update_limit
-    }
+    def x, y, vel, character, height, update_limit, last_update
 
     def update(characters){
         last_update -= 1
@@ -71,21 +52,17 @@ class Entity{
 vert_lines.times{vert ->
     horiz_lines.times{horiz ->
       def vel = random.nextInt(3) + 1
-      entities << new Entity(width/vert_lines*vert, height/horiz_lines*horiz, vel, random, height)
+      def update_limit = random.nextInt(50)+10
+      entities << new Entity(x: width/vert_lines*vert, y: height/horiz_lines*horiz, vel: vel, height: height, character: random.nextInt(26), update_limit: update_limit, last_update: update_limit)
     }
 }
   
 SwingBuilder.build {
-   frame( title: 'GraphicsBuilder', size: [width,height],
-          defaultCloseOperation: EXIT_ON_CLOSE, visible: true ){  
-      panel( gp, graphicsOperation: null)
-   }
+   frame( title: 'GraphicsBuilder', size: [width,height],defaultCloseOperation: EXIT_ON_CLOSE, visible: true ){  panel( gp, graphicsOperation: null)}
 }
 
 while(true){
     sleep(30)
-    entities.each{
-      it.update(avail_chars)
-    }
+    entities.each{it.update(avail_chars)}
     gp.refresh()
 }
