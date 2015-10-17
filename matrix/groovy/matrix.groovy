@@ -3,7 +3,7 @@
 //add to classpath in one of the manners found here
 //http://groovy.codehaus.org/Running#Running-Addingthingstotheclasspath
 
-import groovy.swing.SwingBuilder  
+import groovy.swing.SwingBuilder
 import groovy.swing.j2d.*
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -12,7 +12,7 @@ import java.awt.Font
 import java.awt.Color
 
 import static javax.swing.JFrame.EXIT_ON_CLOSE
-  
+
 def gb = new GraphicsBuilder()
 def width = 200
 def height = 200
@@ -33,7 +33,9 @@ def gp = new GraphicsPanel(){
       entities.each{g2.drawString(avail_chars[it.character],it.x.intValue(),it.y.intValue());}
     }
 
-    public void refresh(){super.repaint()}
+    public void refresh(){
+      super.repaint()
+    }
 }
 
 class Entity{
@@ -56,7 +58,7 @@ vert_lines.times{vert ->
       entities << new Entity(x: width/vert_lines*vert, y: height/horiz_lines*horiz, vel: vel, height: height, character: random.nextInt(26), update_limit: update_limit, last_update: update_limit)
     }
 }
-  
+
 SwingBuilder.build {
    frame( title: 'GraphicsBuilder', size: [width,height],defaultCloseOperation: EXIT_ON_CLOSE, visible: true ){  panel( gp, graphicsOperation: null)}
 }
